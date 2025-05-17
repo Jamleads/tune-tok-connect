@@ -1,6 +1,8 @@
 
+'use client';
+
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Music, Disc } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -8,8 +10,8 @@ import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 
 const Login = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { login, isAuthenticated, user } = useAuth();
   const [username, setUsername] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
@@ -17,21 +19,21 @@ const Login = () => {
   
   // Extract role from URL query parameters
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const roleParam = params.get('role');
+    const roleParam = searchParams.get('role');
     if (roleParam === 'musician' || roleParam === 'creator') {
       setSelectedRole(roleParam);
     }
-  }, [location]);
+  }, [searchParams]);
   
   // Redirect logged in users to their dashboard
   useEffect(() => {
     if (isAuthenticated) {
-      const redirectPath = location.state?.from || 
+      const from = searchParams.get('from') || '';
+      const redirectPath = from || 
         (user.role === 'musician' ? '/musician/dashboard' : '/creator/dashboard');
-      navigate(redirectPath);
+      router.push(redirectPath);
     }
-  }, [isAuthenticated, user, navigate, location]);
+  }, [isAuthenticated, user, router, searchParams]);
 
   const handleRoleSelect = (role) => {
     setSelectedRole(role);
@@ -48,9 +50,10 @@ const Login = () => {
       const success = login(username, selectedRole);
       
       if (success) {
-        const redirectPath = location.state?.from || 
+        const from = searchParams.get('from') || '';
+        const redirectPath = from || 
           (selectedRole === 'musician' ? '/musician/dashboard' : '/creator/dashboard');
-        navigate(redirectPath);
+        router.push(redirectPath);
       }
       
       setIsLoading(false);

@@ -1,8 +1,10 @@
 
-import { useNavigate } from "react-router-dom";
+'use client';
+
+import { useRouter } from "next/navigation";
 
 const Footer = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   
   return (
     <footer className="bg-black text-white py-8 mt-auto">
@@ -22,13 +24,13 @@ const Footer = () => {
           <div>
             <h4 className="text-md font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li className="hover:text-tiktok-pink transition-colors cursor-pointer" onClick={() => navigate('/')}>
+              <li className="hover:text-tiktok-pink transition-colors cursor-pointer" onClick={() => router.push('/')}>
                 Home
               </li>
-              <li className="hover:text-tiktok-pink transition-colors cursor-pointer" onClick={() => navigate('/login?role=musician')}>
+              <li className="hover:text-tiktok-pink transition-colors cursor-pointer" onClick={() => router.push('/login?role=musician')}>
                 For Musicians
               </li>
-              <li className="hover:text-tiktok-pink transition-colors cursor-pointer" onClick={() => navigate('/login?role=creator')}>
+              <li className="hover:text-tiktok-pink transition-colors cursor-pointer" onClick={() => router.push('/login?role=creator')}>
                 For Content Creators
               </li>
             </ul>
