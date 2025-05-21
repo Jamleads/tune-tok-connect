@@ -1,8 +1,6 @@
 
-'use client';
-
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useData } from '@/context/DataContext';
 import { toast } from '@/components/ui/sonner';
@@ -19,8 +17,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, ExternalLink, Music2 } from 'lucide-react';
 
-const CampaignDetail = ({ campaignId }) => {
-  const router = useRouter();
+const CampaignDetail = () => {
+  const { campaignId } = useParams();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const { 
     campaigns,
@@ -53,10 +52,10 @@ const CampaignDetail = ({ campaignId }) => {
         }
       } else {
         toast.error("Campaign not found");
-        router.push('/creator/campaigns');
+        navigate('/creator/campaigns');
       }
     }
-  }, [campaignId, campaigns, submissions, loading, user, router]);
+  }, [campaignId, campaigns, submissions, loading, user, navigate]);
   
   const handleSubmit = async (e) => {
     e.preventDefault();

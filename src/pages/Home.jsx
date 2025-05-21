@@ -1,25 +1,23 @@
 
-'use client';
-
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Music, Disc } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 
 const Home = () => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
 
   const handleCTAClick = (role) => {
     if (isAuthenticated) {
       if (user.role === role) {
-        router.push(role === 'musician' ? '/musician/submit' : '/creator/campaigns');
+        navigate(role === 'musician' ? '/musician/submit' : '/creator/campaigns');
       } else {
-        router.push(user.role === 'musician' ? '/musician/dashboard' : '/creator/dashboard');
+        navigate(user.role === 'musician' ? '/musician/dashboard' : '/creator/dashboard');
       }
     } else {
-      router.push(`/login?role=${role}`);
+      navigate(`/login?role=${role}`);
     }
   };
 

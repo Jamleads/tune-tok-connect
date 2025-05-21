@@ -1,25 +1,22 @@
 
-'use client';
-
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { LogOut, Music2 } from "lucide-react";
 
 const Navbar = () => {
   const { user, logout, isMusician, isCreator } = useAuth();
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    router.push('/');
+    navigate('/');
   };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-10 bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2" onClick={() => router.push('/')} style={{ cursor: 'pointer' }}>
+        <div className="flex items-center gap-2" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
           <Music2 className="h-6 w-6 text-tiktok-pink" />
           <h1 className="font-bold text-xl">
             <span className="text-tiktok-pink">Tune</span>
@@ -33,17 +30,17 @@ const Navbar = () => {
             <div className="hidden md:flex items-center gap-4">
               {isMusician && (
                 <>
-                  <Button variant="ghost" onClick={() => router.push('/musician/dashboard')}>Dashboard</Button>
-                  <Button variant="ghost" onClick={() => router.push('/musician/submit')}>Submit Music</Button>
-                  <Button variant="ghost" onClick={() => router.push('/musician/review')}>Review Content</Button>
+                  <Button variant="ghost" onClick={() => navigate('/musician/dashboard')}>Dashboard</Button>
+                  <Button variant="ghost" onClick={() => navigate('/musician/submit')}>Submit Music</Button>
+                  <Button variant="ghost" onClick={() => navigate('/musician/review')}>Review Content</Button>
                 </>
               )}
               
               {isCreator && (
                 <>
-                  <Button variant="ghost" onClick={() => router.push('/creator/dashboard')}>Dashboard</Button>
-                  <Button variant="ghost" onClick={() => router.push('/creator/campaigns')}>Available Campaigns</Button>
-                  <Button variant="ghost" onClick={() => router.push('/creator/submissions')}>My Submissions</Button>
+                  <Button variant="ghost" onClick={() => navigate('/creator/dashboard')}>Dashboard</Button>
+                  <Button variant="ghost" onClick={() => navigate('/creator/campaigns')}>Available Campaigns</Button>
+                  <Button variant="ghost" onClick={() => navigate('/creator/submissions')}>My Submissions</Button>
                 </>
               )}
             </div>
@@ -69,13 +66,13 @@ const Navbar = () => {
           <div className="flex justify-between px-2">
             {isMusician && (
               <>
-                <Button variant="ghost" size="sm" onClick={() => router.push('/musician/dashboard')}>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/musician/dashboard')}>
                   Dashboard
                 </Button>
-                <Button variant="ghost" size="sm" onClick={() => router.push('/musician/submit')}>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/musician/submit')}>
                   Submit
                 </Button>
-                <Button variant="ghost" size="sm" onClick={() => router.push('/musician/review')}>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/musician/review')}>
                   Review
                 </Button>
               </>
@@ -83,13 +80,13 @@ const Navbar = () => {
             
             {isCreator && (
               <>
-                <Button variant="ghost" size="sm" onClick={() => router.push('/creator/dashboard')}>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/creator/dashboard')}>
                   Dashboard
                 </Button>
-                <Button variant="ghost" size="sm" onClick={() => router.push('/creator/campaigns')}>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/creator/campaigns')}>
                   Campaigns
                 </Button>
-                <Button variant="ghost" size="sm" onClick={() => router.push('/creator/submissions')}>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/creator/submissions')}>
                   Submissions
                 </Button>
               </>

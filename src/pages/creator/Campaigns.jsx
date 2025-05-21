@@ -1,8 +1,6 @@
 
-'use client';
-
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { useData } from '@/context/DataContext';
 import Layout from '@/components/layout/Layout';
 import {
@@ -18,7 +16,7 @@ import { Music, Search } from 'lucide-react';
 
 const Campaigns = () => {
   const { getActiveCampaigns, loading } = useData();
-  const router = useRouter();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   
   // Get active campaigns

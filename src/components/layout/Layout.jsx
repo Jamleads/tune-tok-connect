@@ -1,16 +1,14 @@
 
-'use client';
-
 import { useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
 const Layout = ({ children, requireAuth = false, allowedRoles = [] }) => {
   const { isAuthenticated, user, loading } = useAuth();
-  const router = useRouter();
-  const pathname = usePathname();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // Wait until auth state is determined
@@ -18,7 +16,7 @@ const Layout = ({ children, requireAuth = false, allowedRoles = [] }) => {
 
     if (requireAuth && !isAuthenticated) {
       // Redirect to login if auth is required but user is not logged in
-      router.push(`/login?from=${pathname}`);
+      navigate('/login', { state: { from: location.pathname } });
     } else if (
       requireAuth &&
       isAuthenticated &&
@@ -27,9 +25,9 @@ const Layout = ({ children, requireAuth = false, allowedRoles = [] }) => {
     ) {
       // Redirect to dashboard if user role doesn't match required roles
       const dashboardPath = user.role === 'musician' ? '/musician/dashboard' : '/creator/dashboard';
-      router.push(dashboardPath);
+      navigate(dashboardPath);
     }
-  }, [isAuthenticated, requireAuth, user, loading, router, pathname, allowedRoles]);
+  }, [isAuthenticated, requireAuth, user, loading, navigate, location, allowedRoles]);
 
   // Show nothing while checking auth status
   if (loading) {

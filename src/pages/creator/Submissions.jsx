@@ -1,9 +1,7 @@
 
-'use client';
-
 import { useAuth } from '@/context/AuthContext';
 import { useData } from '@/context/DataContext';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import {
   Card,
@@ -19,7 +17,7 @@ import { ExternalLink, CheckCircle, XCircle, Clock, Search } from 'lucide-react'
 const Submissions = () => {
   const { user } = useAuth();
   const { getCreatorSubmissions, campaigns, loading } = useData();
-  const router = useRouter();
+  const navigate = useNavigate();
   
   // Get submissions for the logged-in creator
   const submissions = getCreatorSubmissions(user?.id);
